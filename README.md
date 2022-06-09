@@ -2,7 +2,7 @@
 This is a 2d game engine on Python.
 
 
-# Components
+## Components
 The engine have components like Trnasform(for coordinates and size), Sprite e. g.
 I have done this for comfortable creating of game objects.
 The components are in `engine.components` file
