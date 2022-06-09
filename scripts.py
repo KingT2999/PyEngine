@@ -7,8 +7,8 @@ from engine.components import *
 
 
 @Start
-def hacker_start():
-	hacker.speed = 5
+def player_start():
+	player.speed = 5
 
 @Start
 def money_spawn():
@@ -25,31 +25,31 @@ def money_spawn():
 
 # Player Move
 @PreRenderUpdate
-def hacker_pre_render():
+def player_pre_render():
 	keys = pygame.key.get_pressed()
 
 	if keys[pygame.K_w] or keys[pygame.K_UP]:
-		if hacker.transform.y > 0:
-			hacker.transform.y -= hacker.speed
+		if player.transform.y > 0:
+			player.transform.y -= player.speed
 	elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
-		if hacker.transform.y < HEIGHT - hacker.transform.height:
-			hacker.transform.y += hacker.speed
+		if player.transform.y < HEIGHT - player.transform.height:
+			player.transform.y += player.speed
 
 	if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-		if hacker.transform.x > 0:
-			hacker.transform.x -= hacker.speed
+		if player.transform.x > 0:
+			player.transform.x -= player.speed
 	elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-		if hacker.transform.x < WIDTH - hacker.transform.height:
-			hacker.transform.x += hacker.speed
+		if player.transform.x < WIDTH - player.transform.height:
+			player.transform.x += player.speed
 
 	# Camera Follow
-	camera.follow((hacker.transform.x + hacker.transform.width // 2, hacker.transform.y + hacker.transform.height // 2), WIDTH, HEIGHT)
+	camera.follow((player.transform.x + player.transform.width // 2, player.transform.y + player.transform.height // 2), WIDTH, HEIGHT)
 
 # 
 @PreRenderUpdate
-def hacker_money_pre_render():
+def player_money_pre_render():
 	for money in money_list:
-		if hacker.collider.is_intersection(money):
+		if player.collider.is_intersection(money):
 			money_list.remove(money)
 
 @RenderUpdate
@@ -62,6 +62,6 @@ def money_render(screen):
 		money.sprite.render_to(screen, camera.get_local_coords(money.transform.get_coords()))
 
 @RenderUpdate
-def hacker_render(screen):
-	hacker.sprite.render_to(screen, camera.get_local_coords(hacker.transform.get_coords()))
-	hacker.sprite.anim_play()
+def player_render(screen):
+	player.sprite.render_to(screen, camera.get_local_coords(player.transform.get_coords()))
+	player.sprite.anim_play()

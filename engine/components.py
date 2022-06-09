@@ -18,6 +18,7 @@ class Component:
         self.game_obj = game_obj
 
 class TransformComponent(Component):
+    """Coordinates and Size"""
     def __init__(self, game_obj: GameObj, x=0, y=0, width=100, height=100):
         super().__init__(game_obj)
         self.game_obj.transform = self # Add TransformComponent to GameObj
@@ -60,6 +61,7 @@ class TransformComponent(Component):
             self.game_obj.sprite._resize(self._width, self._height)
 
 class SpriteComponent(Component):
+    """Sprite"""
     def __init__(self, game_obj: GameObj, path: str):
         super().__init__(game_obj)
 
@@ -82,6 +84,7 @@ class SpriteComponent(Component):
         screen.blit(self.img, coords)
 
 class AnimationComponent(SpriteComponent):
+    """Animation"""
     def __init__(self, game_obj: GameObj, frame_path_list: list, frame_indx=0, speed=1):
         Component.__init__(self, game_obj)
 
@@ -123,9 +126,8 @@ class AnimationComponent(SpriteComponent):
     def anim_play(self):
         self._frame_indx = (self._frame_indx + self.speed) % len(self.img_list)
 
-
-
 class AudioComponent(Component):
+    """Sounds"""
     def __init__(self, game_obj: GameObj, path: str):
         super().__init__(game_obj)
 
@@ -137,6 +139,7 @@ class AudioComponent(Component):
         self.audio.play()
 
 class ColliderComponent(Component):
+    """Game Objects Interaction"""
     def __init__(self, game_obj: GameObj):
         super().__init__(game_obj)
 
