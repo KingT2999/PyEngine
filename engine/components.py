@@ -6,6 +6,7 @@ import math
 pygame.init()
 
 class GameObj:
+    """Game Object"""
     def __init__(self):
         # Components
         self.transform = None
@@ -14,6 +15,7 @@ class GameObj:
         self.audio = []
 
 class Component:
+    """Component Base"""
     def __init__(self, game_obj: GameObj):
         self.game_obj = game_obj
 
