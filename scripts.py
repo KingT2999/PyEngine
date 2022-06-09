@@ -19,7 +19,14 @@ def money_spawn():
 	for i in range(5):
 		money = GameObj()
 		TransformComponent(money, x=random.randint(0, 400), y=random.randint(0, 400), width=100, height=100)
-		SpriteComponent(money, 'media/sprites/money.png')
+		AnimationComponent(money, (
+			'media/sprites/fire/frames/0.png',
+			'media/sprites/fire/frames/1.png',
+			'media/sprites/fire/frames/2.png',
+			'media/sprites/fire/frames/3.png',
+			'media/sprites/fire/frames/4.png',
+			'media/sprites/fire/frames/5.png',
+			), speed=0.25)
 
 		money_list.append(money)
 
@@ -60,8 +67,8 @@ def wall_render(screen):
 def money_render(screen):
 	for money in money_list:
 		money.sprite.render_to(screen, camera.get_local_coords(money.transform.get_coords()))
+		money.sprite.anim_play()
 
 @RenderUpdate
 def player_render(screen):
 	player.sprite.render_to(screen, camera.get_local_coords(player.transform.get_coords()))
-	player.sprite.anim_play()
