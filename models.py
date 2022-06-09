@@ -14,6 +14,6 @@ TransformComponent(wall, 0, 0, WIDTH, HEIGHT)
 # PLayer
 hacker = GameObj()
 TransformComponent(hacker, 15, 15, 100, 100)
-SpriteComponent(hacker, 'media/sprites/fsociety.jpg')
+AnimationComponent(hacker, ('media/sprites/fsociety.jpg', 'media/sprites/money.png'), speed=0.05)
 ColliderComponent(hacker)
 # AudioComponent(hacker, 'media/audio/toin.mp3')

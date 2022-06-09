@@ -1,5 +1,6 @@
 # Game Objects Components
 import pygame
+import math
 
 
 pygame.init()
@@ -79,6 +80,50 @@ class SpriteComponent(Component):
 
     def render_to(self, screen, coords: tuple):
         screen.blit(self.img, coords)
+
+class AnimationComponent(SpriteComponent):
+    def __init__(self, game_obj: GameObj, frame_path_list: list, frame_indx=0, speed=1):
+        Component.__init__(self, game_obj)
+
+        # Transform Component exsiting check
+        if self.game_obj.transform is None:
+            raise BaseException('You forget add TransformComponent')
+
+        self.game_obj.sprite = self # Add AnimationComponent to GameObj
+        self._frame_indx = frame_indx # Animation Frame Index
+        self.speed = speed
+
+        # Sprites load
+        self.img_list = []
+        for path in frame_path_list:
+            img = pygame.image.load(path)
+            img = pygame.transform.scale(img, (self.game_obj.transform.width, self.game_obj.transform.height))
+            self.img_list.append(img)
+
+    @property
+    def frame_indx(self):
+        return math.floor(self._frame_indx)
+
+    @frame_indx.setter
+    def frame_indx(self, value):
+        self._frame_indx = value
+
+    @property
+    def img(self):
+        return self.img_list[self.frame_indx]
+
+    @img.setter
+    def img(self, value):
+        self.img_list[self.frame_indx] = value
+
+    def _re_size(self, width: int, height: int):
+        for img in self.img_list:
+            img = pygame.transform.scale(img, (width, height))
+
+    def anim_play(self):
+        self._frame_indx = (self._frame_indx + self.speed) % len(self.img_list)
+
+
 
 class AudioComponent(Component):
     def __init__(self, game_obj: GameObj, path: str):

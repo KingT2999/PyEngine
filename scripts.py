@@ -64,3 +64,4 @@ def money_render(screen):
 @RenderUpdate
 def hacker_render(screen):
 	hacker.sprite.render_to(screen, camera.get_local_coords(hacker.transform.get_coords()))
+	hacker.sprite.anim_play()
