@@ -9,9 +9,9 @@ The components are in `engine.components` file
 
 In the file `models.py` are creating gameobjects and their components.
 
-# Scripts
+## Scripts
 In file `scripts.py` you can create game scripts.
 For adding script to game you will use decoraters for your functions from `engine.scripts`.
 
-# End
+## End
 All what you will do: creating game objects and components (models) and writing scripts)
