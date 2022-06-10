@@ -1,5 +1,4 @@
 # Game Objects Components
-import copy
 import pygame
 import math
 
