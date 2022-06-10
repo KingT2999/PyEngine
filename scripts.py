@@ -17,18 +17,11 @@ def money_spawn():
 	money_list = []
 
 	for i in range(5):
-		money = GameObj()
-		TransformComponent(money, x=random.randint(0, 400), y=random.randint(0, 400), width=100, height=100)
-		AnimationComponent(money, (
-			'media/sprites/fire/frames/0.png',
-			'media/sprites/fire/frames/1.png',
-			'media/sprites/fire/frames/2.png',
-			'media/sprites/fire/frames/3.png',
-			'media/sprites/fire/frames/4.png',
-			'media/sprites/fire/frames/5.png',
-			), speed=0.25)
+		m = money.spawn()
+		m.transform.x = random.randint(0, 400)
+		m.transform.y = random.randint(0, 400)
 
-		money_list.append(money)
+		money_list.append(m)
 
 # Player Move
 @PreRenderUpdate

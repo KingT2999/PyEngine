@@ -1,4 +1,5 @@
 # Game Objects Components
+import copy
 import pygame
 import math
 
@@ -13,6 +14,28 @@ class GameObj:
         self.sprite = None
         self.collider = None
         self.audio = []
+
+    def spawn(self):
+        game_obj = copy.copy(self)
+
+        if self.transform is not None:
+            game_obj.transform = copy.copy(self.transform)
+            game_obj.transform.game_obj = game_obj
+
+        if self.sprite is not None:
+            game_obj.sprite = copy.copy(self.sprite)
+            game_obj.sprite.game_obj = game_obj
+
+        if self.collider is not None:
+            game_obj.collider = copy.copy(self.collider)
+            game_obj.collider.game_obj = game_obj
+
+        if len(self.audio) != 0:
+            game_obj.audio = copy.copy(self.audio)
+            game_obj.audio.game_obj = game_obj
+
+
+        return game_obj
 
 class Component:
     """Component Base"""
