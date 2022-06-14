@@ -5,7 +5,9 @@ from config import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 # Camera
-camera = Camera()
+camera = Camera(width=500, height=500)
+camera.d_w = 1
+camera.d_h = 1
 
 # Wall
 wall = GameObj()
