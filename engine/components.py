@@ -34,13 +34,6 @@ class GameObj:
             game_obj.audio = copy.copy(self.audio)
             game_obj.audio.game_obj = game_obj
 
-        # for component in self.components:
-        #     if self.components[component] is not None:
-        #         game_obj.components[component] = copy.copy(self.components[component])
-        #         game_obj.components[component].game_obj = game_obj
-
-        #         print(component)
-
 
         return game_obj
 
