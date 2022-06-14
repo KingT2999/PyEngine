@@ -1,7 +1,7 @@
 import random
 from engine.components import *
 from engine.camera import Camera
-from config import WIDTH, HEIGHT
+from config import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 # Camera
@@ -9,7 +9,7 @@ camera = Camera()
 
 # Wall
 wall = GameObj()
-TransformComponent(wall, 0, 0, WIDTH, HEIGHT)
+TransformComponent(wall, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 
 
 # PLayer
