@@ -43,9 +43,9 @@ def player_pre_render() -> None:
 			player.transform.x += player.speed
 
 	# Camera Follow
-	camera.follow((player.transform.x + player.transform.width // 2, player.transform.y + player.transform.height // 2), WINDOW_WIDTH, WINDOW_HEIGHT)
+	camera.follow((player.transform.x + player.transform.width // 2, player.transform.y + player.transform.height // 2))
 
-# 
+# player and fire intersection
 @PreRenderUpdate
 def player_money_pre_render() -> None:
 	for money in money_list:
