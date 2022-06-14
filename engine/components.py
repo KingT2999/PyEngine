@@ -1,7 +1,6 @@
 # Game Objects Components
 import copy
 import pygame
-import math
 
 
 pygame.init()
@@ -142,7 +141,7 @@ class AnimationComponent(SpriteComponent):
 
     @property
     def frame_indx(self) -> int:
-        return math.floor(self._frame_indx)
+        return int(self._frame_indx)
 
     @frame_indx.setter
     def frame_indx(self, value) -> None:

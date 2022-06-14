@@ -32,7 +32,7 @@ class Camera:
 	# Size Getters and Setters
 	@property
 	def width(self) -> int:
-		return self._width
+		return int(self._width * self.width_coeff)
 	
 	@width.setter
 	def width(self, value) -> None:
@@ -40,7 +40,7 @@ class Camera:
 	
 	@property
 	def height(self) -> int:
-		return self._height
+		return int(self._height * self.height_coeff)
 	
 	@height.setter
 	def height(self, value) -> None:
@@ -58,5 +58,5 @@ class Camera:
 
 
 	def follow(self, coords: tuple) -> None:
-		self.x = coords[0] - (self._width) // 2
-		self.y = coords[1] - (self._height) // 2
+		self.x = coords[0] - (self.width) // 2
+		self.y = coords[1] - (self.height) // 2
