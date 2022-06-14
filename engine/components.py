@@ -13,7 +13,7 @@ class GameObj:
         self.transform = None
         self.sprite = None
         self.collider = None
-        self.audio = []
+        self.audio = None
 
     def spawn(self):
         game_obj = copy.copy(self)
@@ -30,9 +30,16 @@ class GameObj:
             game_obj.collider = copy.copy(self.collider)
             game_obj.collider.game_obj = game_obj
 
-        if len(self.audio) != 0:
+        if self.audio is not None:
             game_obj.audio = copy.copy(self.audio)
             game_obj.audio.game_obj = game_obj
+
+        # for component in self.components:
+        #     if self.components[component] is not None:
+        #         game_obj.components[component] = copy.copy(self.components[component])
+        #         game_obj.components[component].game_obj = game_obj
+
+        #         print(component)
 
 
         return game_obj
@@ -155,6 +162,9 @@ class AudioComponent(Component):
     """Sounds"""
     def __init__(self, game_obj: GameObj, path: str):
         super().__init__(game_obj)
+
+        if self.game_obj.audio is None:
+            self.game_obj.audio = []
 
         self.game_obj.audio.append(self)
 

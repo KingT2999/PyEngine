@@ -58,9 +58,14 @@ def wall_render(screen):
 
 @RenderUpdate
 def money_render(screen):
+	# print('*'*88)
 	for money in money_list:
 		money.sprite.render_to(screen, camera.get_local_coords(money.transform.get_coords()))
 		money.sprite.anim_play()
+
+	# 	print(money.transform)
+	# 	print(money.sprite)
+	# print('*'*88)
 
 @RenderUpdate
 def player_render(screen):
