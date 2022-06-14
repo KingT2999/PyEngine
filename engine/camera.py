@@ -1,8 +1,12 @@
+import sys
+sys.path.append('../')
+
+from PyEngine.config import WINDOW_WIDTH, WINDOW_HEIGHT
 from .components import GameObj
 
 
 class Camera:
-	def __init__(self, x=0, y=0) -> None:
+	def __init__(self, x=0, y=0, width=WINDOW_WIDTH, height=WINDOW_HEIGHT) -> None:
 		self.x = x
 		self.y = y
 
