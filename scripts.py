@@ -25,13 +25,13 @@ def money_spawn() -> None:
 
 @PreRenderUpdate
 def camera_pre_render_update() -> None:
-	if 100 == camera._width or camera._width == 1000:
+	if 100 == camera.width or camera.width == 1000:
 		camera.d_w = -camera.d_w
-	if 100 == camera._height or camera._height == 1000:
+	if 100 == camera.height or camera.height == 1000:
 		camera.d_h = -camera.d_h
 	
-	camera._width += camera.d_w
-	camera._height += camera.d_h
+	camera.width += camera.d_w
+	camera.height += camera.d_h
 
 # Player Move
 @PreRenderUpdate
