@@ -1,11 +1,17 @@
 # Game Objects Components
+from abc import ABC, abstractmethod
 import copy
 import pygame
 
 
 pygame.init()
 
-class GameObj:
+class IGameObj(ABC):
+    @abstractmethod
+    def spawn(self):
+        pass
+
+class GameObj(IGameObj):
     """Game Object"""
     def __init__(self) -> None:
         # Components
