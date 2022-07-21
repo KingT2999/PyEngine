@@ -55,40 +55,14 @@ class TransformComponent(Component):
 
         self.x = x
         self.y = y
-        self._width = width
-        self._height = height
-
-    @property
-    def width(self) -> int:
-        return self._width
-
-    @width.setter
-    def width(self, value: int) -> None:
-        self._width = value
-
-        if self.game_obj.sprite is not None:
-            self.game_obj.sprite._re_size(value, self._height)
-
-    @property
-    def height(self) -> int:
-        return self._height
-
-    @height.setter
-    def height(self, value: int) -> None:
-        self._height = value
-
-        if self.game_obj.sprite is not None:
-            self.game_obj.sprite._re_size(self._width, value)
+        self.width = width
+        self.height = height
 
     def get_coords(self) -> tuple:
         return (self.x, self.y)
 
-    def re_size(self, width: int, height: int) -> None:
-        self._width = width
-        self._height = height
-
-        if self.game_obj.sprite is not None:
-            self.game_obj.sprite._resize(self._width, self._height)
+    def re_size(self, size: tuple) -> None:
+        self.width, self.height = size
 
 class SpriteComponent(Component):
     """Sprite"""
@@ -104,18 +78,17 @@ class SpriteComponent(Component):
         self.img = pygame.image.load(path)
         self.img = pygame.transform.scale(self.img, (self.game_obj.transform.width, self.game_obj.transform.height))
 
-    def _re_size(self, width: int, height: int) -> None:
-        self.img = pygame.transform.scale(self.img, (width, height))
-    
+    # Return Resized Img
     def __get_resized_img(self, size: tuple) -> pygame.SurfaceType:
         img = copy.copy(self.img)
         img = pygame.transform.scale(img, size)
 
         return img
 
-    def render(self, screen, size=None) -> None:
+    def render(self, screen: pygame.SurfaceType, size=None) -> None:
         if size is None:
-            screen.blit(self.img, (self.game_obj.transform.x, self.game_obj.transform.y))
+            img = self.__get_resized_img(self.game_obj.transform.width, self.game_obj.transform.height)
+            screen.blit(img, (self.game_obj.transform.x, self.game_obj.transform.y))
         else:
             screen.blit(self.__get_resized_img(size), (self.game_obj.transform.x, self.game_obj.transform.y))
 
