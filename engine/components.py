@@ -51,6 +51,7 @@ class Component(IComponent):
     def __init__(self, game_obj: GameObj) -> None:
         self.game_obj = game_obj
 
+# Transform Component
 class ITransformComponent(ABC):
     """Coordinates and Size"""
     x: int
@@ -83,6 +84,7 @@ class TransformComponent(Component, ITransformComponent):
     def re_size(self, size: tuple) -> None:
         self.width, self.height = size
 
+# Sprite Component
 class SpriteComponent(Component):
     """Sprite"""
     def __init__(self, game_obj: GameObj, path: str) -> None:
