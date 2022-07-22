@@ -79,24 +79,25 @@ class SpriteComponent(Component):
         self.img = pygame.transform.scale(self.img, (self.game_obj.transform.width, self.game_obj.transform.height))
 
     # Return Resized Img
-    def __get_resized_img(self, size: tuple) -> pygame.SurfaceType:
+    def _get_resized_img(self, size: tuple) -> pygame.SurfaceType:
         img = copy.copy(self.img)
         img = pygame.transform.scale(img, size)
 
         return img
 
+    # Rendering
     def render(self, screen: pygame.SurfaceType, size=None) -> None:
         if size is None:
-            img = self.__get_resized_img(self.game_obj.transform.width, self.game_obj.transform.height)
+            img = self._get_resized_img(self.game_obj.transform.width, self.game_obj.transform.height)
             screen.blit(img, (self.game_obj.transform.x, self.game_obj.transform.y))
         else:
-            screen.blit(self.__get_resized_img(size), (self.game_obj.transform.x, self.game_obj.transform.y))
+            screen.blit(self._get_resized_img(size), (self.game_obj.transform.x, self.game_obj.transform.y))
 
     def render_to(self, screen, coords: tuple, size=None) -> None:
         if size is None:
             screen.blit(self.img, coords)
         else:
-            screen.blit(self.__get_resized_img(size), coords)
+            screen.blit(self._get_resized_img(size), coords)
 
 class AnimationComponent(SpriteComponent):
     """Animation"""
