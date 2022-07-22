@@ -37,4 +37,5 @@ while True:
     pygame.display.update()
 
     # FPS
+    pygame.display.set_caption(f'My Engine | FPS:{int(clock.get_fps())}')
     clock.tick(FPS)

@@ -42,15 +42,34 @@ class GameObj(IGameObj):
 
         return game_obj
 
-class Component:
+#<=======================Components=======================>
+class IComponent(ABC):
+    game_obj: GameObj
+
+class Component(IComponent):
     """Component Base"""
     def __init__(self, game_obj: GameObj) -> None:
         self.game_obj = game_obj
 
-class TransformComponent(Component):
+class ITransformComponent(ABC):
+    """Coordinates and Size"""
+    x: int
+    y: int
+    width: int
+    height: int
+
+    @abstractmethod
+    def get_coords(self):
+        pass
+
+    @abstractmethod
+    def re_size(self):
+        pass
+
+class TransformComponent(Component, ITransformComponent):
     """Coordinates and Size"""
     def __init__(self, game_obj: GameObj, x=0, y=0, width=100, height=100) -> None:
-        super().__init__(game_obj)
+        Component.__init__(self, game_obj)
         self.game_obj.transform = self # Add TransformComponent to GameObj
 
         self.x = x
