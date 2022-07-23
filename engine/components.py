@@ -8,8 +8,7 @@ pygame.init()
 
 class IGameObj(ABC):
     @abstractmethod
-    def spawn(self):
-        pass
+    def spawn(self): pass
 
 class GameObj(IGameObj):
     """Game Object"""
@@ -52,7 +51,7 @@ class Component(IComponent):
         self.game_obj = game_obj
 
 # Transform Component
-class ITransformComponent(ABC):
+class ITransformComponent(IComponent):
     """Coordinates and Size"""
     x: int
     y: int
@@ -60,12 +59,10 @@ class ITransformComponent(ABC):
     height: int
 
     @abstractmethod
-    def get_coords(self):
-        pass
+    def get_coords(self): pass
 
     @abstractmethod
-    def re_size(self):
-        pass
+    def re_size(self): pass
 
 class TransformComponent(Component, ITransformComponent):
     """Coordinates and Size"""
@@ -85,10 +82,23 @@ class TransformComponent(Component, ITransformComponent):
         self.width, self.height = size
 
 # Sprite Component
-class SpriteComponent(Component):
+class ISpriteComponent(IComponent):
+    """Sprite"""
+    img: pygame.Surface
+
+    @abstractmethod
+    def _get_resized_img(self): pass
+
+    @abstractmethod
+    def render(self): pass
+
+    @abstractmethod
+    def render_to(self): pass
+
+class SpriteComponent(ISpriteComponent, Component):
     """Sprite"""
     def __init__(self, game_obj: GameObj, path: str) -> None:
-        super().__init__(game_obj)
+        Component.__init__(self, game_obj)
 
         # Transform Component exsiting check
         if self.game_obj.transform is None:
@@ -99,8 +109,8 @@ class SpriteComponent(Component):
         self.img = pygame.image.load(path)
         self.img = pygame.transform.scale(self.img, (self.game_obj.transform.width, self.game_obj.transform.height))
 
-    # Return Resized Img
-    def _get_resized_img(self, size: tuple) -> pygame.SurfaceType:
+    # Img Resizing
+    def _get_resized_img(self, size: tuple) -> pygame.Surface:
         img = copy.copy(self.img)
         img = pygame.transform.scale(img, size)
 
@@ -120,7 +130,34 @@ class SpriteComponent(Component):
         else:
             screen.blit(self._get_resized_img(size), coords)
 
-class AnimationComponent(SpriteComponent):
+# Animation Component
+class IAnimationComponent(ISpriteComponent):
+    """Animation"""
+    _frame_indx: float
+    speed: int
+    img_list: list
+    
+    @property
+    @abstractmethod
+    def frame_indx(self): pass
+
+    @frame_indx.setter
+    @abstractmethod
+    def frame_indx(self): pass
+
+    @property
+    @abstractmethod
+    def img(self): pass
+
+    @img.setter
+    @abstractmethod
+    def img(self): pass
+
+    @abstractmethod
+    def anim_play(self): pass
+
+
+class AnimationComponent(IAnimationComponent, SpriteComponent):
     """Animation"""
     def __init__(self, game_obj: GameObj, frame_path_list: list, frame_indx=0, speed=1) -> None:
         Component.__init__(self, game_obj)
@@ -156,17 +193,21 @@ class AnimationComponent(SpriteComponent):
     def img(self, value) -> None:
         self.img_list[self.frame_indx] = value
 
-    def _re_size(self, width: int, height: int) -> None:
-        for img in self.img_list:
-            img = pygame.transform.scale(img, (width, height))
-
     def anim_play(self) -> None:
         self._frame_indx = (self._frame_indx + self.speed) % len(self.img_list)
 
-class AudioComponent(Component):
+# Audio Component
+class IAudioComponent(IComponent):
+    """Sounds"""
+    audio: pygame.mixer.Sound
+
+    @abstractmethod
+    def play(self): pass
+
+class AudioComponent(IAudioComponent, Component):
     """Sounds"""
     def __init__(self, game_obj: GameObj, path: str) -> None:
-        super().__init__(game_obj)
+        Component.__init__(self, game_obj)
 
         if self.game_obj.audio is None:
             self.game_obj.audio = []
@@ -178,10 +219,17 @@ class AudioComponent(Component):
     def play(self) -> None:
         self.audio.play()
 
-class ColliderComponent(Component):
+# Collider Component
+class IColliderComponent(IComponent):
+    """Game Objects Interaction"""
+
+    @abstractmethod
+    def is_intersection(self): pass
+
+class ColliderComponent(IColliderComponent, Component):
     """Game Objects Interaction"""
     def __init__(self, game_obj: GameObj) -> None:
-        super().__init__(game_obj)
+        Component.__init__(self, game_obj)
 
         # Transform Component exsiting check
         if self.game_obj.transform is None:
