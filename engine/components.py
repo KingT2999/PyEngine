@@ -119,7 +119,7 @@ class SpriteComponent(ISpriteComponent, Component):
     # Rendering
     def render(self, screen: pygame.SurfaceType, size=None) -> None:
         if size is None:
-            img = self._get_resized_img(self.game_obj.transform.width, self.game_obj.transform.height)
+            img = self._get_resized_img((self.game_obj.transform.width, self.game_obj.transform.height))
             screen.blit(img, (self.game_obj.transform.x, self.game_obj.transform.y))
         else:
             screen.blit(self._get_resized_img(size), (self.game_obj.transform.x, self.game_obj.transform.y))

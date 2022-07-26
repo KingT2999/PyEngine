@@ -32,3 +32,13 @@ AnimationComponent(money, (
 	'media/sprites/fire/frames/4.png',
 	'media/sprites/fire/frames/5.png',
 	), speed=0.25)
+
+# Post-Processing
+post_processing = GameObj()
+TransformComponent(post_processing, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+AnimationComponent(post_processing, (
+	'media/sprites/post_processing/1.png',
+	'media/sprites/post_processing/2.png',
+	'media/sprites/post_processing/3.png',
+	'media/sprites/post_processing/4.png',
+), speed=0.2)

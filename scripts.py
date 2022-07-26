@@ -78,3 +78,8 @@ def money_render(screen) -> None:
 def player_render(screen) -> None:
 	player.sprite.render_to(screen, camera.get_local_coords(player.transform.get_coords()),
 	(player.transform.width * camera.width_coeff, player.transform.height * camera.height_coeff))
+
+@RenderUpdate
+def post_processing_render(screen) -> None:
+	post_processing.sprite.render(screen)
+	post_processing.sprite.anim_play()
