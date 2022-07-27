@@ -28,9 +28,6 @@ while True:
     for script in PRE_RENDER_UPDATE_SCRIPTS:
         script()
 
-    # Render
-    screen.fill((0, 255, 0))
-
     for script in RENDER_UPDATE_SCRIPTS:
         script(screen)
 

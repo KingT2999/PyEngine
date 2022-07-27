@@ -62,11 +62,18 @@ def player_money_pre_render() -> None:
 		if player.collider.is_intersection(money):
 			money_list.remove(money)
 
+# Screen Fill
+@RenderUpdate
+def screen_fill_render(screen) -> None:
+    screen.fill((64, 64, 64))
+
+# Wall
 @RenderUpdate
 def wall_render(screen) -> None:
 	pygame.draw.rect(screen, (0, 0, 0), (camera.get_local_x(wall.transform.x), camera.get_local_y(wall.transform.y),
 	wall.transform.width * camera.width_coeff, wall.transform.height * camera.height_coeff), 5)
 
+# Money
 @RenderUpdate
 def money_render(screen) -> None:
 	for money in money_list:
@@ -74,11 +81,13 @@ def money_render(screen) -> None:
 		(money.transform.width * camera.width_coeff, money.transform.height * camera.height_coeff))
 		money.sprite.anim_play()
 
+# Plyaer
 @RenderUpdate
 def player_render(screen) -> None:
 	player.sprite.render_to(screen, camera.get_local_coords(player.transform.get_coords()),
 	(player.transform.width * camera.width_coeff, player.transform.height * camera.height_coeff))
 
+# Post-Processing
 @RenderUpdate
 def post_processing_render(screen) -> None:
 	post_processing.sprite.render(screen)
