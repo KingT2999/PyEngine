@@ -241,6 +241,17 @@ class ColliderComponent(IColliderComponent, Component):
         # game_obj Transform Component exsiting check
         if game_obj.transform is None:
             raise BaseException('You forget add TransformComponent to game_obj')
-
-        return (abs(game_obj.transform.x - self.game_obj.transform.x) <= self.game_obj.transform.width) \
-        and (abs(game_obj.transform.y - self.game_obj.transform.y) <= self.game_obj.transform.height)
+        
+        # X Intersection
+        if game_obj.transform.x < self.game_obj.transform.x:
+            x_intersection = self.game_obj.transform.x - game_obj.transform.x <= game_obj.transform.width
+        else:
+            x_intersection = game_obj.transform.x - self.game_obj.transform.x <= self.game_obj.transform.width
+        
+        # Y Intersection
+        if game_obj.transform.y < self.game_obj.transform.y:
+            y_intersection = self.game_obj.transform.y - game_obj.transform.y <= game_obj.transform.height
+        else:
+            y_intersection = game_obj.transform.y - self.game_obj.transform.y <= self.game_obj.transform.height
+        
+        return x_intersection and y_intersection
