@@ -77,18 +77,21 @@ def wall_render(screen) -> None:
 @RenderUpdate
 def money_render(screen) -> None:
 	for money in money_list:
-		money.sprite.render_to(screen, camera.get_local_coords(money.transform.get_coords()), 
-		(money.transform.width * camera.width_coeff, money.transform.height * camera.height_coeff))
+		money.sprite.render(screen)
 		money.sprite.anim_play()
 
 # Plyaer
 @RenderUpdate
 def player_render(screen) -> None:
-	player.sprite.render_to(screen, camera.get_local_coords(player.transform.get_coords()),
-	(player.transform.width * camera.width_coeff, player.transform.height * camera.height_coeff))
+	player.sprite.render(screen)
 
 # Post-Processing
 @RenderUpdate
 def post_processing_render(screen) -> None:
+	post_processing.transform.x = camera.x
+	post_processing.transform.y = camera.y
+	post_processing.transform.width = camera.width
+	post_processing.transform.height = camera.height
+
 	post_processing.sprite.render(screen)
 	post_processing.sprite.anim_play()

@@ -3,6 +3,8 @@ from abc import ABC, abstractmethod
 import copy
 import pygame
 
+from .camera import Camera
+
 
 pygame.init()
 
@@ -92,9 +94,6 @@ class ISpriteComponent(IComponent):
     @abstractmethod
     def render(self): pass
 
-    @abstractmethod
-    def render_to(self): pass
-
 class SpriteComponent(ISpriteComponent, Component):
     """Sprite"""
     def __init__(self, game_obj: GameObj, path: str) -> None:
@@ -117,18 +116,9 @@ class SpriteComponent(ISpriteComponent, Component):
         return img
 
     # Rendering
-    def render(self, screen: pygame.SurfaceType, size=None) -> None:
-        if size is None:
-            img = self._get_resized_img((self.game_obj.transform.width, self.game_obj.transform.height))
-            screen.blit(img, (self.game_obj.transform.x, self.game_obj.transform.y))
-        else:
-            screen.blit(self._get_resized_img(size), (self.game_obj.transform.x, self.game_obj.transform.y))
-
-    def render_to(self, screen, coords: tuple, size=None) -> None:
-        if size is None:
-            screen.blit(self.img, coords)
-        else:
-            screen.blit(self._get_resized_img(size), coords)
+    def render(self, screen: pygame.SurfaceType) -> None:
+        img = self._get_resized_img((self.game_obj.transform.width * Camera.CURRENT_CAMERA.width_coeff, self.game_obj.transform.height * Camera.CURRENT_CAMERA.height_coeff))
+        screen.blit(img, Camera.CURRENT_CAMERA.get_local_coords((self.game_obj.transform.x, self.game_obj.transform.y)))
 
 # Animation Component
 class IAnimationComponent(ISpriteComponent):
