@@ -5,7 +5,8 @@ from config import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 # Camera
-camera = Camera(width=500, height=500)
+# camera = Camera(width=500, height=500)
+camera = Camera.CURRENT_CAMERA
 camera.d_w = 1
 camera.d_h = 1
 

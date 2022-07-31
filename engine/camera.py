@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 import sys
 sys.path.append('../')
 
@@ -5,10 +6,47 @@ from PyEngine.config import WINDOW_WIDTH, WINDOW_HEIGHT
 from .components import GameObj
 
 
-class Camera:
+class ICamera:
+	x: int
+	y: int
+	width: int
+	height: int
+	CURRENT_CAMERA: 'Camera'
+
+	@property
+	@abstractmethod
+	def width_coeff(self): pass
+
+	@width_coeff.setter
+	@abstractmethod
+	def width_coeff(self, value): pass
+
+	@property
+	@abstractmethod
+	def height_coeff(self): pass
+
+	@height_coeff.setter
+	@abstractmethod
+	def height_coeff(self, value): pass
+
+	@abstractmethod
+	def get_local_x(self): pass
+
+	@abstractmethod
+	def get_local_y(self): pass
+
+	@abstractmethod
+	def get_local_coords(self): pass
+
+	@abstractmethod
+	def follow(self): pass
+
+class Camera(ICamera):
+	CURRENT_CAMERA: 'Camera'
+
 	def __init__(self, x=0, y=0, width=WINDOW_WIDTH, height=WINDOW_HEIGHT) -> None:
 		self.x = x
-		self.y = y
+		self.y = x
 		self.width = width
 		self.height = height
 	
@@ -42,3 +80,6 @@ class Camera:
 	def follow(self, coords: tuple) -> None:
 		self.x = coords[0] - (self.width) // 2
 		self.y = coords[1] - (self.height) // 2
+
+# camera = Camera(0, 0, 500, 500)
+Camera.CURRENT_CAMERA = Camera(0, 0, 500, 500)
