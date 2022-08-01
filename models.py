@@ -18,7 +18,7 @@ TransformComponent(wall, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 # PLayer
 player = GameObj()
 TransformComponent(player, 15, 15, 100, 100)
-SpriteComponent(player, 'media/sprites/fsociety.jpg')
+SpriteComponent(player, 'media/sprites/Modeus.png')
 ColliderComponent(player)
 # AudioComponent(player, 'media/audio/toin.mp3')
 

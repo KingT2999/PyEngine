@@ -65,7 +65,7 @@ def player_money_pre_render() -> None:
 # Screen Fill
 @RenderUpdate
 def screen_fill_render(screen) -> None:
-    screen.fill((64, 64, 64))
+    screen.fill((84, 0, 0))
 
 # Wall
 @RenderUpdate
