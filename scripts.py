@@ -11,32 +11,58 @@ def music_start():
 	pygame.mixer.music.load('media/audio/music.mp3')
 	pygame.mixer.music.play(loops=-1)
 
+	pygame.mixer.music.set_volume(0.25)
+
 @Start
 def player_start() -> None:
 	player.speed = 5
 
 @Start
-def money_spawn() -> None:
-	global money_list
+def fire_spawn() -> None:
+	global fire_list
 
-	money_list = []
+	fire_list = []
 
 	for i in range(5):
-		m = money.spawn()
-		m.transform.x = random.randint(0, 400)
-		m.transform.y = random.randint(0, 400)
+		f = fire.spawn()
+		f.transform.x = random.randint(0, 400)
+		f.transform.y = random.randint(0, 400)
 
-		money_list.append(m)
+		fire_list.append(f)
 
 @PreRenderUpdate
-def camera_pre_render_update() -> None:
-	if 100 == camera.width or camera.width == 1000:
-		camera.d_w = -camera.d_w
-	if 100 == camera.height or camera.height == 1000:
-		camera.d_h = -camera.d_h
-	
-	camera.width += camera.d_w
-	camera.height += camera.d_h
+def fire_pre_render() -> None:
+	if len(fire_list) < 5:
+		f = fire.spawn()
+		f.transform.x = random.randint(0, 400)
+		f.transform.y = random.randint(0, 400)
+		fire_list.append(f)
+
+	speed = 2
+	for f in fire_list:
+		if player.transform.x < f.transform.x:
+			f.transform.x -= speed
+		else:
+			f.transform.x += speed
+		
+		if player.transform.y < f.transform.y:
+			f.transform.y -= speed
+		else:
+			f.transform.y += speed
+
+# @PreRenderUpdate
+# def bullet_pre_render():
+# 	global bullet_list
+
+# 	bullet_list = []
+
+# 	if pygame.mouse.get_pressed(3):
+# 		b = bullet.spawn()
+# 		b.transform.x = player.transform.x
+# 		b.transform.y = player.transform.y
+
+
+# 		bullet_list.append(b)
 
 # Player Move
 @PreRenderUpdate
@@ -63,9 +89,9 @@ def player_pre_render() -> None:
 # player and fire intersection
 @PreRenderUpdate
 def player_money_pre_render() -> None:
-	for money in money_list:
-		if player.collider.is_intersection(money):
-			money_list.remove(money)
+	for fire in fire_list:
+		if player.collider.is_intersection(fire):
+			fire_list.remove(fire)
 
 # Screen Fill
 @RenderUpdate
@@ -80,10 +106,10 @@ def wall_render(screen) -> None:
 
 # Money
 @RenderUpdate
-def money_render(screen) -> None:
-	for money in money_list:
-		money.sprite.render(screen)
-		money.sprite.anim_play()
+def fire_render(screen) -> None:
+	for fire in fire_list:
+		fire.sprite.render(screen)
+		fire.sprite.anim_play()
 
 # Plyaer
 @RenderUpdate

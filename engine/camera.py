@@ -81,5 +81,4 @@ class Camera(ICamera):
 		self.x = coords[0] - (self.width) // 2
 		self.y = coords[1] - (self.height) // 2
 
-# camera = Camera(0, 0, 500, 500)
-Camera.CURRENT_CAMERA = Camera(0, 0, 500, 500)
+Camera.CURRENT_CAMERA = Camera(0, 0, 1000, 1000)

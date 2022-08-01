@@ -22,10 +22,14 @@ SpriteComponent(player, 'media/sprites/Modeus.png')
 ColliderComponent(player)
 # AudioComponent(player, 'media/audio/toin.mp3')
 
+# Bullet
+bullet = GameObj()
+TransformComponent(bullet, 0, 0, 15, 15)
+
 # Fire
-money = GameObj()
-TransformComponent(money, width=100, height=100)
-AnimationComponent(money, (
+fire = GameObj()
+TransformComponent(fire, width=100, height=100)
+AnimationComponent(fire, (
 	'media/sprites/fire/frames/0.png',
 	'media/sprites/fire/frames/1.png',
 	'media/sprites/fire/frames/2.png',
