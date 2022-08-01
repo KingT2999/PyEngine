@@ -9,7 +9,7 @@ from engine.components import *
 @Start
 def music_start():
 	pygame.mixer.music.load('media/audio/music.mp3')
-	pygame.mixer.music.play()
+	pygame.mixer.music.play(loops=1)
 
 @Start
 def player_start() -> None:
